@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<p:messages for="suceso" />
+		<h:form id="form">
+			<ui:remove>
+				<p:ajaxStatus onstart="PF('statusDialog').show()"
+					onsuccess="PF('statusDialog').hide()" />
+
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+					closable="false" resizable="false" header="Aplicando filtros">
+					<p:graphicImage url="images/loading.gif" />
+				</p:dialog>
+			</ui:remove>
+			
+			<p:fieldset legend="Seleccione año y mes" style="text-align:center">
+			<div align="center">
+			<h:panelGrid columns="2">
+			<h:panelGrid columns="4">
+			<h:outputLabel value="Desde Año:" />
+			<p:inputMask value="#{exportacionesPorPaisListMB.anho}" required="true" mask="9999" size="5"></p:inputMask>
+			<h:outputLabel value="Mes:" />
+			<p:inputMask value="#{exportacionesPorPaisListMB.mes}" required="true" mask="99" size="5"></p:inputMask>
+			
+			<h:outputLabel value="Hasta Año:" />
+			<p:inputMask value="#{exportacionesPorPaisListMB.anhoHasta}" required="true" mask="9999" size="5"></p:inputMask>
+			<h:outputLabel value="Mes:" />
+			<p:inputMask value="#{exportacionesPorPaisListMB.mesHasta}" required="true" mask="99" size="5"></p:inputMask>
+			</h:panelGrid>
+			<h:panelGrid>
+			<p:commandButton value="Obtener datos"
+				actionListener="#{exportacionesPorPaisListMB.init}" icon="ui-icon-search"
+				ajax="true" update="list">
+			</p:commandButton>
+			</h:panelGrid>
+			</h:panelGrid>
+			</div>
+			<div align="center">
+			<table>
+			<tr>
+			<td align="center">
+			<p:dataTable id="list" var="bean" style="align:center; text-align:center; width:50%"
+				value="#{exportacionesPorPaisListMB.listaImportacionesPorAnho}" paginator="true"
+				rows="10" resizableColumns="true" emptyMessage="No hay datos"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				paginatorPosition="bottom" paginatorAlwaysVisible="true"
+				currentPageReportTemplate="(Registros: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+				<f:facet name="header">Exportaciones Por Categoria</f:facet>
+				<p:column style="width:50%" filterBy="#{bean.get('pais_abreviado')}"
+					filterMatchMode="contains" sortBy="#{bean.get('pais_abreviado')}">
+					<f:facet name="header">pais_abreviado</f:facet>
+					<h:outputText value="#{bean.get('pais_abreviado')}" />
+				</p:column>
+				<p:column style="text-align: right;" filterMatchMode="contains" 
+					filterBy="#{bean.get('valor_fob_dolar')}"
+					sortBy="#{bean.get('valor_fob_dolar')}">
+					<f:facet name="header">valor_fob_dolar</f:facet>
+					<h:outputText value="#{bean.get('valor_fob_dolar')}">
+						<f:convertNumber locale="es" />
+					</h:outputText>
+				</p:column>
+				<p:column style="text-align: right" filterMatchMode="contains"
+					filterBy="#{bean.get('kilo_neto')}"
+					sortBy="#{bean.get('kilo_neto')}">
+					<f:facet name="header">kilo_neto</f:facet>
+					<h:outputText value="#{bean.get('kilo_neto')}">
+						<f:convertNumber locale="es" />
+					</h:outputText>
+				</p:column>
+
+			</p:dataTable>
+			
+			</td>
+			</tr>
+			
+			</table>
+						</div>
+			<h:commandLink>
+				<p:graphicImage url="resources/icons/json.png" />
+				<p:fileDownload value="#{exportacionesPorPaisListMB.json}" />
+			</h:commandLink>
+			<h:commandLink onclick="PrimeFaces.monitorDownload(start, stop);">
+				<p:graphicImage url="resources/icons/csv.png" />
+				<p:fileDownload value="#{exportacionesPorPaisListMB.csv}" />
+			</h:commandLink>
+			</p:fieldset>
+			
+			<p:dialog modal="true" widgetVar="statusDialog2" header="Descarcando" position="center fixed"
+				draggable="false" closable="false" resizable="false">
+				<p:graphicImage url="images/loading.gif" />
+			</p:dialog>
+			
+			
+			<script type="text/javascript">
+				function start() {
+				    PF('statusDialog2').show();
+				}
+				 
+				function stop() {
+				    PF('statusDialog2').hide();
+				}
+				</script>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

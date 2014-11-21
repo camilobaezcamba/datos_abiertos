@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" locale="es" />
+
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/images/title.png"/>
+	<title>#{messages['main.app.title']}</title>
+	<script type="text/javascript">
+		PrimeFaces.locales['es'] = {
+			closeText : 'Cerrar',
+			prevText : 'Anterior',
+			nextText : 'Siguiente',
+			monthNames : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+					'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ],
+			monthNamesShort : [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+					'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+			dayNames : [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves',
+					'Viernes', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ],
+			dayNamesMin : [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 1,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Sólo hora',
+			timeText : 'Tiempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			currentText : 'Fecha actual',
+			ampm : false,
+			month : 'Mes',
+			week : 'Semana',
+			day : 'Día',
+			allDayText : 'Todo el día'
+		};
+	</script>
+</h:head>
+
+<h:body style="background-color:#ffffff">
+	<f:facet name="last">
+		<h:outputStylesheet name="css/style.css" />
+
+	</f:facet>
+
+
+
+	<table style="width: 100%; background-color: #ffffff">
+		<tr valign="top">
+			<td align="left"><img src="images/rumbo.png" width="240"
+				height="100" border="0" /></td>
+			<td align="center"><h:outputLabel align="center"
+					style="font-family: 'basic Sans sf', arial, helvetica, sans-serif; font-size: 32pt; color: rgb(125, 125, 125); font-weight: bold;">
+								Datos Abiertos del Ministerio de Industria y Comercio
+								</h:outputLabel></td>
+
+			<td align="right"><img src="images/mic.png" border="0"
+				width="290" height="100" /></td>
+
+		</tr>
+	</table>
+	<table style="width: 100%">
+		<tr>
+			<td height="20"><ui:include src="/menu.xhtml" /></td>
+		</tr>
+		<tr valign="top">
+			<td height="400"><ui:insert name="body" /></td>
+		</tr>
+		<tr align="center">
+			<td height="20" align="center" class="text-input"><br/><h2>#{messages['main.footer.text']}</h2></td>
+		</tr>
+	</table>
+
+	<p:growl id="messages" globalOnly="true" />
+
+	<p:ajaxStatus style="width:16px;height:16px;">
+		<f:facet name="start">
+		</f:facet>
+
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+</h:body>
+</html>

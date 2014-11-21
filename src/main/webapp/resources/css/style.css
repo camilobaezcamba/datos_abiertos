@@ -1,0 +1,129 @@
+.customDialog {
+	background: green; 
+	} 
+.ui-dialog.customDialog .ui-dialog-content { 
+	padding: 0; margin: 20px 10px; 
+	} 
+.ui-dialog-titlebar.ui-widget-header.customDialog { 
+	background: green; color: black; box-shadow: none; 
+	}	
+.ui-widget {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 0.85em;
+}
+.ui-widget .ui-widget {
+    font-size: 0.85em;
+}
+.ui-datatable table {
+    border-collapse: collapse;
+    font-size: 1.05em;
+}
+.ui-menu.ui-menubar .ui-menu-parent .ui-menu-child {
+	width:280px !important;
+	height:auto !important;
+	/*overflow:hidden !important;*/
+}
+
+/*.ui-toolbar {
+    padding: 0.5em;
+}*/
+
+h1 {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    margin-right: 180px;
+    margin-left: 100px;
+    color: #0073EA;
+}
+h2 {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    margin-right: 80px;
+    margin-left: 100px;
+    color: #0073EA;
+}
+
+h3 {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    margin-right: 20px;
+    margin-left: 20px;
+    color: #0073EA;
+}
+p {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 0.8em;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    margin-right: 180px;
+    margin-left: 100px;
+}
+li {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 0.8em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 180px;
+    margin-left: 100px;
+}
+
+.ui-button {
+	margin: 4px;
+}
+
+.ui-outputlabel .ui-widget{
+	/*margin: 4px;*/
+	padding: 10px;
+}
+.ui-icon-pdf{
+    background-image: url("#{resource['icons/pdf.png']}") !important;
+    position: absolute;
+
+    top: ....px;
+    left: ......px;
+    border: none;
+ 	cursor: pointer;
+    
+}
+.ui-icon-json{
+    background-image: url("#{resource['icons/json.png']}") !important;
+    position: absolute;
+
+    top: ....px;
+    left: ......px;
+    border: none;
+ 	cursor: pointer;
+    
+}
+.ui-icon-csv{
+    background-image: url("#{resource['icons/csv.png']}") !important;
+    position: absolute;
+
+    top: ....px;
+    left: ......px;
+    border: none;
+ 	cursor: pointer;
+    
+}
+header h1{
+	color:#FFFFFF;	
+}
+
+.ui-column-filterchico {
+display: block;
+width: 95px;
+margin: auto;
+}
+
+.ui-menu .ui-separator { 
+   background: #A8A8A8; 
+   border: none; 
+   width: 1px; 
+   clear: none; 
+   height: 22px; 
+   margin: 4px 6px 0; 
+   box-shadow: none; 
+}

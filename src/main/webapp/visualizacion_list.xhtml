@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+
+	<ui:define name="body">
+		<h:outputStylesheet name="/css/dataTables.bootstrap.css" />
+		<p:messages for="suceso" />
+		<h:form>
+			<div align="center">
+			<table>
+			<tr valign="top">
+			<td>
+				<p:dataTable id="list" var="bean" styleClass="borderless"
+					style="width:70%;" value="#{visualizacionListMB.lista}">
+					<p:column>
+						<table>
+							<tr>
+								<td><h3><h:outputText value="#{bean.nombre}" /></h3><br /> <h:outputText
+										value="#{bean.descripcion}" /></td>
+							</tr>
+							<tr>
+								<td><h:commandLink
+										action="#{visualizacionListMB.getLink(bean.link)}">
+										<p:graphicImage url="#{bean.vistaPrevia}" height="300"
+											width="550" />
+									</h:commandLink></td>
+							</tr>
+						</table>
+					</p:column>
+				</p:dataTable>
+			</td>
+			<td>
+				<p:dataTable id="list2" var="bean" styleClass="borderless"
+					style="width:70%;" value="#{visualizacionListMB.lista2}">
+					<p:column>
+						<table>
+							<tr>
+								<td><h3><h:outputText value="#{bean.nombre}" /></h3><br /> <h:outputText
+										value="#{bean.descripcion}" /></td>
+							</tr>
+							<tr>
+								<td><h:commandLink
+										action="#{visualizacionListMB.getLink(bean.link)}">
+										<p:graphicImage url="#{bean.vistaPrevia}" height="300"
+											width="550" />
+									</h:commandLink></td>
+							</tr>
+						</table>
+					</p:column>
+				</p:dataTable>
+			</td>
+			</tr>
+			</table>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<p:messages for="suceso" />
+		<h:form id="form">
+			<ui:remove>
+				<p:ajaxStatus onstart="PF('statusDialog').show()" 
+					onsuccess="PF('statusDialog').hide()" />
+
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" 
+					closable="false" resizable="false" header="Aplicando filtros">
+					<p:graphicImage url="images/loading.gif" />
+				</p:dialog>
+			</ui:remove>
+			<p:dialog modal="true" widgetVar="statusDialog2" header="Descarcando" position="center fixed"
+				draggable="false" closable="false" resizable="false">
+				<p:graphicImage url="images/loading.gif" />
+			</p:dialog>
+			<div align="center">
+			<p:dataTable id="list" var="bean"
+				value="#{datosListMB.listaImportacionesPorAnho}" paginator="true"
+				rows="25" resizableColumns="true" emptyMessage="No hay datos"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				paginatorPosition="bottom" paginatorAlwaysVisible="true" currentPageReportTemplate="(Registros: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+				<f:facet name="header">Importaciones por Año</f:facet>
+				<p:column style="width:95px;" filterMatchMode="contains"
+					filterBy="#{bean.get('anho')}" sortBy="#{bean.get('anho')}">
+					<f:facet name="header">año</f:facet>
+					<h:outputText value="#{bean.get('anho')}" />
+				</p:column>
+				<p:column style="width:95px;" filterMatchMode="contains"
+					filterBy="#{bean.get('mes_nombre')}"
+					sortBy="#{bean.get('mes_nombre')}">
+					<f:facet name="header">mes</f:facet>
+					<h:outputText value="#{bean.get('mes_nombre')}" />
+				</p:column>
+				<p:column style="width:40%" filterMatchMode="contains"
+					filterBy="#{bean.get('comprador')}"
+					sortBy="#{bean.get('comprador')}">
+					<f:facet name="header">comprador</f:facet>
+					<h:outputText value="#{bean.get('comprador')}" />
+				</p:column>
+				<p:column filterBy="#{bean.get('pais_destino')}"
+					filterMatchMode="contains" sortBy="#{bean.get('pais_destino')}">
+					<f:facet name="header">pais_destino</f:facet>
+					<h:outputText value="#{bean.get('pais_destino')}" />
+				</p:column>
+				<p:column filterBy="#{bean.get('pais_origen')}"
+					filterMatchMode="contains" sortBy="#{bean.get('pais_origen')}">
+					<f:facet name="header">pais_origen</f:facet>
+					<h:outputText value="#{bean.get('pais_origen')}" />
+				</p:column>
+				<p:column style="text-align: right" filterMatchMode="contains"
+					filterBy="#{bean.get('valor_fob_dolar')}"
+					sortBy="#{bean.get('valor_fob_dolar')}">
+					<f:facet name="header">valor_fob_dolar</f:facet>
+					<h:outputText value="#{bean.get('valor_fob_dolar')}">
+						<f:convertNumber locale="es" />
+					</h:outputText>
+				</p:column>
+
+			</p:dataTable>
+			<h:commandLink>
+				<p:graphicImage url="resources/icons/json.png" />
+				<p:fileDownload value="#{datosListMB.json}" />
+			</h:commandLink>
+			<h:commandLink onclick="PrimeFaces.monitorDownload(start, stop);">
+				<p:graphicImage url="resources/icons/csv.png" />
+				<p:fileDownload value="#{datosListMB.csv}" />
+			</h:commandLink>
+			</div>
+			<script type="text/javascript">
+				function start() {
+				    PF('statusDialog2').show();
+				}
+				 
+				function stop() {
+				    PF('statusDialog2').hide();
+				}
+				</script>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

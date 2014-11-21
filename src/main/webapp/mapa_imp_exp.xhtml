@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<link rel="stylesheet" href="resources/css/trademapper.css"></link>
+		<script data-main="js/main" src="js/require.js"></script>
+		<script src="js/funciones.js" charset="utf-8"></script>
+		<style>
+			.header.row {
+				background-color: #0073EA;
+			}
+		</style>
+		<p:messages for="suceso" />
+		
+		<div id="map-wrapper">
+			<div class="header row">
+				<header class="inner">
+					<div class="user-actions">
+						<form id="tm-file-select"></form>
+					</div>
+				</header>
+			</div>
+			<div id="ayuda" style="display:none; text-align: center;">
+						<img src="images/loading.gif" alt="Cargando.." />
+			</div>
+			<div class="map row">
+				<div class="inner">
+					<aside id="filter-panel" class="aside col">
+						<form id="form-filters"></form>
+					</aside>
+					<div id="trademapper" class="map col"></div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

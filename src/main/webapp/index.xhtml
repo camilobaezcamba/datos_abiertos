@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+<ui:define name="body">
+	<p:messages for="suceso" />
+	<div align="center" style="box-shadow:0 40px 40px -40px #AAA;">
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+					onsuccess="PF('statusDialog').hide()" />
+
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" position="center fixed"
+					closable="false" resizable="false" header="Obteniendo Datos">
+					<p:graphicImage url="images/loading.gif" />
+				</p:dialog>
+		<h:form>
+		<p:tabView>
+			<p:tab title="#{messages['dataset.list.table.title']}">
+				<p:dataTable id="list" var="bean" value="#{datasetListMB.lista}">
+				<f:facet name="header">#{messages['dataset.list.table.title']}</f:facet>
+				<p:column>
+					<f:facet name="header">#{messages['dataset.label.numero']}</f:facet>
+					<h:outputText value="#{bean.numero}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">#{messages['dataset.label.nombre']}</f:facet>
+					<h:outputText value="#{bean.nombre}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">#{messages['dataset.label.descripcion']}</f:facet>
+					<h:outputText value="#{bean.descripcion}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">#{messages['dataset.label.link']}</f:facet>
+					<h:outputText value="http://datos.vue.org.py/#{bean.servicio}" />
+				</p:column>
+				<p:column style="width:15%;">
+					<p:commandButton title="#{messages['boton.diccionario']}" value="Diccionario"
+						action="#{datasetListMB.getNextView}"
+						actionListener="#{datasetListMB.clear}" icon="ui-icon-help"
+						ajax="true">
+						<f:param name="id" value="#{bean.id}" />
+					</p:commandButton>
+					<p:commandButton title="#{messages['boton.datos']}" value="Datos"
+						action="#{datasetListMB.getLink(bean.link)}"
+						actionListener="#{datasetListMB.clear}" icon="ui-icon-search"
+						ajax="true">
+						<f:param name="id" value="#{bean.id}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			</p:tab>
+			<p:tab title="Referencia">
+				<h1 align="center" style="color: #0073EA"> Referencia</h1>
+			<p>La siguiente tabla presenta una breve descripción de los atributos incluídos en el diccionario de datos del dataset.
+			Básicamente, un diccionario de datos describe los atributos que contiene un dataset, incluyendo el tipo de dato y las restricciones se apliquen a cada uno.</p>
+			<br/>
+			<p:dataTable id="list2" var="bean"  style="width:85%;" value="#{diccionarioListMB.listaReferencia}">
+				<p:column>
+					<f:facet name="header">#{messages['diccionario.label.atributo']}</f:facet>
+					<h:outputText value="#{bean.atributo}" />
+				</p:column>
+				
+				<p:column>
+					<f:facet name="header">#{messages['diccionario.label.descripcion']}</f:facet>
+					<h:outputText value="#{bean.descripcion}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">#{messages['diccionario.label.tipo.dato']}</f:facet>
+					<h:outputText value="#{bean.tipoDato}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">#{messages['diccionario.label.restricciones']}</f:facet>
+					<h:outputText value="#{bean.restricciones}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">#{messages['diccionario.label.referencia']}</f:facet>
+					<h:outputText value="#{bean.referencia}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">#{messages['diccionario.label.ejemplo']}</f:facet>
+					<h:outputText value="#{bean.ejemplo}" />
+				</p:column>
+			</p:dataTable>
+			</p:tab>
+			</p:tabView>
+		</h:form>
+		</div>
+	</ui:define>
+
+</ui:composition>

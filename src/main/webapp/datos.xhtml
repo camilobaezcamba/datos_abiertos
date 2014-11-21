@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<p:messages for="suceso" />
+		<h:form>
+			<p:commandButton title="#{messages['boton.editar']}" value="CSV"
+				action="#{clienteListMB.getNextView}"
+				actionListener="#{clienteListMB.clear}" icon="ui-icon-pencil"
+				ajax="true">
+			</p:commandButton>
+			<p:commandButton title="#{messages['boton.editar']}" value="JSON"
+				action="#{clienteListMB.getNextView}"
+				actionListener="#{clienteListMB.clear}" icon="ui-icon-pencil"
+				ajax="true">
+			</p:commandButton>
+			<p:dataTable id="list" var="bean"
+				value="#{datosListMB.listaImportacionesPorAnho}" paginator="true"
+				rows="25" resizableColumns="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginatorPosition="bottom" paginatorAlwaysVisible="true" currentPageReportTemplate="(Registros: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+				
+				<f:facet name="header">Importaciones por Anho</f:facet>
+				<p:column filterBy="#{bean[0]}" filterMatchMode="contains"
+					sortBy="#{bean[0]}">
+					<f:facet name="header">comprador</f:facet>
+					<h:outputText value="#{bean[0]}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">pais_destino</f:facet>
+					<h:outputText value="#{bean[1]}" />
+				</p:column>
+				<p:column filterBy="#{bean[0]}">
+					<f:facet name="header">importador</f:facet>
+					<h:outputText value="#{bean[2]}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">pais_origen</f:facet>
+					<h:outputText value="#{bean[3]}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">exportador</f:facet>
+					<h:outputText value="#{bean[4]}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">valor_fob_dolar</f:facet>
+					<h:outputText value="#{bean[5]}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form>
+		<p:menubar id="menu">
+			<p:menuitem value="#{messages['menu.dataset']}" url="/index.jsf" />
+			<p:separator></p:separator>
+			<p:menuitem value="#{messages['menu.visualizacion']}"
+				url="/visualizacion_list.jsf" />
+			<p:separator></p:separator>
+			<p:menuitem value="#{messages['menu.legal']}" url="/legal.jsf" />
+			<p:separator></p:separator>
+			<p:menuitem value="#{messages['menu.about']}" url="/about.jsf" />
+			<p:separator></p:separator>
+			<p:menuitem url="http://creativecommons.org/licenses/by/4.0/" image="http://i.creativecommons.org/l/by/4.0/80x15.png" />
+			<f:facet name="options">
+			<p:graphicImage url="images/datos-abiertos.png" width="150px"/>
+			<h:outputLink value="http://creativecommons.org/licenses/by/4.0/" >
+			<p:graphicImage url="images/ccby.png" width="68px"/>
+			</h:outputLink>
+			</f:facet>
+		</p:menubar>
+		<p:sticky target="menu"></p:sticky>
+	</h:form>
+
+</ui:composition>

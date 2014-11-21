@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+
+		<script type="text/javascript" src="js/google-api.js"></script>
+		<script src="js/d3.v3.min.js" charset="utf-8"></script>
+		<script src="js/funciones.js" charset="utf-8"></script>
+		<script type="text/javascript">
+	var urlEnd = document.URL.indexOf('=');
+	var anio="";
+	if (urlEnd != -1){
+	    var params = document.URL.substring(urlEnd+1, document.URL.length);
+		anio = params;
+	}
+	if(anio==""){
+		anio = "201401";
+	}
+	function draw(){
+		var valor = jQuery('#select').val();
+		location.href="chart_import.jsf?anio="+valor;
+	}
+	var data;
+	var lista = [];
+  	google.load("visualization", "1", {packages:["corechart"]});
+  	google.setOnLoadCallback(drawChart);
+  	function drawChart() {
+	  d3.json("http://localhost:8080/opendata-ws-restful/ranking/importacion/" + anio, function(error, json) {
+		  data = json.objeto;
+		  lista.push(['Language', 'Speakers (in millions)']);
+		  for(var index in data){
+			lista.push([data[index].razon_social, data[index].valor_fob_dolar]);
+			}
+
+		  var data = google.visualization.arrayToDataTable(lista);
+
+         var options = {
+           title: 'Ranking de Importaciones en '+anio+' (USD)',
+           is3D: true,
+         };
+           var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+           chart.draw(data, options);
+		 });
+  }
+    </script>
+		<h:form prependId="false" id="form">
+			<p:messages for="suceso" />
+			<p:fieldset legend="Seleccione año y mes" style="text-align:center">
+				<div align="center">
+					<h:panelGrid columns="6">
+						<h:outputLabel value="AñoMes:" />
+						<p:inputMask value="" id="select"
+ 							required="true" mask="999999" size="6"></p:inputMask>
+						<p:commandButton value="Obtener datos"
+							  onclick="draw();"	icon="ui-icon-search">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<div id="piechart" style="width: 900px; height: 500px;"></div>
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+

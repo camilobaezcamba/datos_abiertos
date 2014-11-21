@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+
+		<script type="text/javascript" src="js/google-api.js"></script>
+		<script src="js/d3.v3.min.js" charset="utf-8"></script>
+		<script src="js/funciones.js" charset="utf-8"></script>
+		<script type="text/javascript">
+	var urlEnd = document.URL.indexOf('=');
+	var anio="";
+	if (urlEnd != -1){
+	    var params = document.URL.substring(urlEnd+1, document.URL.length);
+		anio = params;
+	}
+	if(anio==""){
+		anio = "201401-201410";
+	}
+	function draw(){
+		var valorDesde = jQuery('#selectDesde').val();
+		var valorHasta = jQuery('#selectHasta').val();
+		location.href="treemap_exp.jsf?anio="+valorDesde+"-"+valorHasta;
+	}
+	var data;
+	var lista = [];
+	google.load("visualization", "1", {packages:["treemap"]});
+    google.setOnLoadCallback(drawChart);
+  	function drawChart() {
+	  d3.json("http://localhost:8080/opendata-ws-restful/exportacionesPorPais/" + anio, function(error, json) {
+		  data = json.objeto;
+		  lista.push(['Pais','Parent','Valor FOB', 'Kilo Neto']);
+		  lista.push(['Global',null,'0', '0']);
+		  var total=0;
+		  for(var index in data){
+			lista.push([data[index].pais_abreviado,'Global',data[index].valor_fob_dolar, data[index].kilo_neto]);
+			total= total + data[index].valor_fob_dolar;
+		  }
+
+		  var data = google.visualization.arrayToDataTable(lista);
+
+    	tree = new google.visualization.TreeMap(document.getElementById('chart_div'));
+
+        tree.draw(data, {
+          title: 'TreeMap de Exportaciones por Pais entre '+anio,
+          minColor: '#0073EA',
+          midColor: '#ddd',
+          maxColor: '#0d0',
+          headerHeight: 15,
+          fontColor: 'black',
+          showScale: true,
+          generateTooltip: showFullTooltip
+        });
+        function showFullTooltip(row, size, value) {
+            return '<div class="ui-fieldset-legend ui-corner-all ui-state-default">' +
+                   '<span style="font-family:Arial"><b>' + data.getValue(row, 0) +
+                   ': ('+ data.getValue(row, 2)*100/total +'%)</b><br/><b>' + formatoMiles(data.getValue(row, 2)) +
+                   ' USD</b></span></div>';
+          }
+		 });
+  }
+    </script>
+		<h:form prependId="false" id="form">
+			<p:messages for="suceso" />
+			<p:fieldset legend="Seleccione año y mes" style="text-align:center">
+				<div align="center">
+					<h:panelGrid columns="6">
+						<h:outputLabel value="AñoMes Desde:" />
+						<p:inputMask value="" id="selectDesde"
+ 							required="true" mask="999999" size="6"></p:inputMask>
+ 						<h:outputLabel value="AñoMes Hasta:" />
+						<p:inputMask value="" id="selectHasta"
+ 							required="true" mask="999999" size="6"></p:inputMask>
+						<p:commandButton value="Obtener datos"
+							  onclick="draw();"	icon="ui-icon-search">
+						</p:commandButton>
+					</h:panelGrid>
+				</div><br />
+				<div id="chart_div" style="width: 900px; height: 500px; margin-left:18%"></div>
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
